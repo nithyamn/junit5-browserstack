@@ -1,0 +1,67 @@
+{
+  "server": "hub-cloud.browserstack.com",
+  "username": "BROWSERSTACK_USERNAME",
+  "accesskey": "BROWSERSTACK_ACCESS_KEY",
+  "tests": {
+    "single": {
+      "common_caps": {
+        "name": "single",
+        "build": "browserstack-junit5-sample",
+        "browserstack.console": "verbose"
+      },
+      "platform": {
+        "chrome": {
+          "browser": "chrome",
+          "browser_version": "latest",
+          "os": "Windows",
+          "os_version": "10"
+        }
+      }
+    },
+    "local": {
+      "common_caps": {
+        "name": "local",
+        "browserstack.local": "true",
+        "build": "browserstack-junit5-sample",
+        "browserstack.console": "verbose"
+      },
+      "platform":{
+        "chrome": {
+          "browser": "edge",
+          "browser_version": "latest",
+          "os": "Windows",
+          "os_version": "10"
+        }
+       }
+      },
+    "parallel": {
+        "common_caps": {
+          "name": "parallel",
+          "build": "browserstack-junit5-sample",
+          "browserstack.console": "verbose"
+        },
+        "platform":{
+          "chrome": {
+            "browser": "chrome",
+            "browser_version": "latest",
+            "os": "Windows",
+            "os_version": "10"
+          },
+          "safari": {
+            "browser": "safari",
+            "browser_version": "latest",
+            "os": "OS X",
+            "os_version": "Big Sur"
+          },
+          "android": {
+            "device": "Samsung Galaxy S9",
+            "os_version": "8.0"
+          },
+          "ios": {
+            "device": "iPhone XS",
+            "os_version": "12"
+          }
+        }
+      }
+    }
+  }
