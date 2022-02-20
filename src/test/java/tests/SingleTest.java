@@ -1,19 +1,21 @@
 package tests;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import runners.BstackRunner;
 import runners.MarkSessionStatus;
-
-import org.junit.jupiter.api.TestTemplate;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import runners.WebDriverTest;
 
-@ExtendWith({BstackRunner.class})
 public class SingleTest {
-    //@TestTemplate
-    void singleTest(WebDriver driver) {
+    WebDriver driver;
+
+    @WebDriverTest
+    void singleTest(DesiredCapabilities capabilities) {
+        BstackRunner runner = new BstackRunner();
+        driver = runner.setupWebDriver(capabilities);
         MarkSessionStatus sessionStatus = new MarkSessionStatus();
         try {
             driver.get("https://bstackdemo.com/");
@@ -31,23 +33,17 @@ public class SingleTest {
             }
             driver.quit();
         } catch (Exception e) {
-            System.out.println("Exception: " + e.getMessage());
             sessionStatus.markTestStatus("failed", "There was some issue!",driver);
-        }
-    }
-
-    //@TestTemplate
-    void parallelTest(WebDriver driver) {
-        try {
-            driver.get("https://google.com/");
-            driver.quit();
-        } catch (Exception e) {
             System.out.println("Exception: " + e.getMessage());
         }
     }
 
-    @TestTemplate
-    void sample(){
-        System.out.println("Hi");
+    //@WebDriverTest
+    void googleTest(DesiredCapabilities caps) {
+        BstackRunner runner = new BstackRunner();
+        driver = runner.setupWebDriver(caps);
+        driver.get("https://google.com/");
+        System.out.println("Test1: " + Thread.currentThread().getName());
+        driver.quit();
     }
 }

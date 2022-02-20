@@ -12,18 +12,6 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <parallel.count>5</parallel.count>
-        <junit.parallel.properties>
-            junit.jupiter.extensions.autodetection.enabled = true
-            junit.jupiter.execution.parallel.enabled = true
-            junit.jupiter.execution.parallel.mode.default = concurrent
-            junit.jupiter.execution.parallel.mode.classes.default = concurrent
-            junit.jupiter.execution.parallel.config.strategy = fixed
-            junit.jupiter.execution.parallel.config.fixed.parallelism = ${parallel.count}
-        </junit.parallel.properties>
-        <junit.sequential.properties>
-            junit.jupiter.extensions.autodetection.enabled = true
-            junit.jupiter.execution.parallel.enabled = false
-        </junit.sequential.properties>
         <tests.single>**/tests.SingleTest.java</tests.single>
         <tests.local>**/tests.LocalTest.java</tests.local>
 
@@ -62,6 +50,12 @@
             <groupId>com.browserstack</groupId>
             <artifactId>browserstack-local-java</artifactId>
             <version>1.0.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-devtools-v93</artifactId>
+            <version>4.0.0</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -102,7 +96,6 @@
                             <systemPropertyVariables>
                                 <config>local</config>
                             </systemPropertyVariables>
-
                             <testFailureIgnore>false</testFailureIgnore>
                         </configuration>
                     </plugin>
@@ -122,12 +115,14 @@
                                 <include>${tests.single}</include>
                             </includes>
                             <systemPropertyVariables>
-                                <parallel.count>5</parallel.count>
                                 <config>parallel</config>
                             </systemPropertyVariables>
                             <properties>
                                 <configurationParameters>
-                                    ${junit.parallel.properties}
+                                    junit.jupiter.execution.parallel.enabled = true
+                                    junit.jupiter.execution.parallel.mode.default = concurrent
+                                    junit.jupiter.execution.parallel.config.strategy=fixed
+                                    junit.jupiter.execution.parallel.config.fixed.parallelism=${parallel.count}
                                 </configurationParameters>
                             </properties>
                             <testFailureIgnore>false</testFailureIgnore>
