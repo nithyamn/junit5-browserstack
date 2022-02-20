@@ -1,4 +1,4 @@
-package runners;
+package utils;
 
 public class OSUtils {
     private static String OS = null;

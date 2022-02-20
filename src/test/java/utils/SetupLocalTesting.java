@@ -1,9 +1,10 @@
-package runners;
+package utils;
 
 import com.browserstack.local.Local;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import runners.BstackRunner;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
