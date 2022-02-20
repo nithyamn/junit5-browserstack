@@ -1,27 +1,34 @@
 package tests;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import runners.BstackRunner;
 import runners.MarkSessionStatus;
-import runners.InitCredsAndLocal;
+import runners.SetupLocalTesting;
 
 import org.json.simple.parser.ParseException;
-import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import runners.WebDriverTest;
 
 
-@ExtendWith({BstackRunner.class, InitCredsAndLocal.class})
+@ExtendWith({SetupLocalTesting.class})
 public class LocalTest {
-    @TestTemplate
-    void localTest(WebDriver driver) throws ParseException {
+    @WebDriverTest
+    void localTest(DesiredCapabilities capabilities) throws ParseException {
         MarkSessionStatus sessionStatus = new MarkSessionStatus();
-
-        driver.get("http://localhost:45691/check");
-        String validateContent = driver.findElement(By.cssSelector("body")).getText();
-        if(validateContent.contains("Up and running"))
-            sessionStatus.markTestStatus("passed", "Local content validated!",driver);
-        else
-            sessionStatus.markTestStatus("failed", "Local content not validated!",driver);
-        driver.quit();
+        BstackRunner runner = new BstackRunner();
+        WebDriver driver = runner.setupWebDriver(capabilities);
+        try{
+            driver.get("http://localhost:45691/check");
+            String validateContent = driver.findElement(By.cssSelector("body")).getText();
+            if(validateContent.contains("Up and running"))
+                sessionStatus.markTestStatus("passed", "Local content validated!",driver);
+            else
+                sessionStatus.markTestStatus("failed", "Local content not validated!",driver);
+            driver.quit();
+        }catch (Exception e){
+            sessionStatus.markTestStatus("failed", "There was some issue!",driver);
+            System.out.println(e.getMessage());
+        }
     }
 }
