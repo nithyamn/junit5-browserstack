@@ -1,8 +1,8 @@
 package tests;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import runners.BstackRunner;
-import runners.MarkSessionStatus;
-import runners.SetupLocalTesting;
+import utils.MarkSessionStatus;
+import utils.SetupLocalTesting;
 
 import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.extension.ExtendWith;

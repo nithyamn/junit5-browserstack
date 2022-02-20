@@ -1,7 +1,7 @@
 package tests;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import runners.BstackRunner;
-import runners.MarkSessionStatus;
+import utils.MarkSessionStatus;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
