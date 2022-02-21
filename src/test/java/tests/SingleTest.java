@@ -31,11 +31,11 @@ public class SingleTest {
             }else{
                 sessionStatus.markTestStatus("failed", "There was some issue!", driver);
             }
-            driver.quit();
         } catch (Exception e) {
             sessionStatus.markTestStatus("failed", "There was some issue!",driver);
             System.out.println("Exception: " + e.getMessage());
         }
+        driver.quit();
     }
 
     //@WebDriverTest
@@ -43,7 +43,7 @@ public class SingleTest {
         BstackRunner runner = new BstackRunner();
         driver = runner.setupWebDriver(caps);
         driver.get("https://google.com/");
-        System.out.println("Test1: " + Thread.currentThread().getName());
+        System.out.println("Test 1: " + Thread.currentThread().getName());
         driver.quit();
     }
 }

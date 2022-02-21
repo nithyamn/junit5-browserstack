@@ -8,7 +8,8 @@
         "name": "single-test",
         "build": "junit5-browserstack",
         "browserstack.console": "verbose",
-        "browserstack.networkLogs": "true"
+        "browserstack.networkLogs": "true",
+        "browserstack.debug": "true"
       },
       "platform": {
         "chrome": {
@@ -22,9 +23,10 @@
     "local": {
       "common_caps": {
         "name": "local-test",
-        "browserstack.local": "true",
         "build": "junit5-browserstack",
-        "browserstack.console": "verbose"
+        "browserstack.console": "verbose",
+        "browserstack.local": "true",
+        "browserstack.debug": "true"
       },
       "platform":{
         "chrome": {
@@ -39,7 +41,8 @@
         "common_caps": {
           "name": "parallel-test",
           "build": "junit5-browserstack",
-          "browserstack.console": "verbose"
+          "browserstack.console": "verbose",
+          "browserstack.debug": "true"
         },
         "platform":{
           "chrome": {

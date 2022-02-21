@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 public class BstackRunner implements TestTemplateInvocationContextProvider {
     JSONObject mainConfig, browserConfig, profileConfig, testConfig, platformConfig, commonCapsConfig;
-    HashMap<String, String> allCaps,commonCapsMap;
+    HashMap<String, String> allCapsMap,commonCapsMap;
     WebDriver driver;
     DesiredCapabilities capabilities;
     String displayName, username, accesskey, server;
@@ -60,7 +60,7 @@ public class BstackRunner implements TestTemplateInvocationContextProvider {
 
     @Override
     public Stream<TestTemplateInvocationContext> provideTestTemplateInvocationContexts(ExtensionContext extensionContext) {
-        List<TestTemplateInvocationContext> webDriverTestInvocationContexts = new ArrayList<>();
+        List<TestTemplateInvocationContext> desiredCapsInvocationContexts = new ArrayList<>();
         String profile = System.getProperty("config");
 
         try{
@@ -80,20 +80,20 @@ public class BstackRunner implements TestTemplateInvocationContextProvider {
                 }
                 String platformName = (String) platformIterator.next();
                 browserConfig = (JSONObject) platformConfig.get(platformName);
-                allCaps = (HashMap<String, String>) browserConfig;
-                Iterator finalCapsIterator = allCaps.entrySet().iterator();
+                allCapsMap = (HashMap<String, String>) browserConfig;
+                Iterator finalCapsIterator = allCapsMap.entrySet().iterator();
                 while (finalCapsIterator.hasNext()){
                     Map.Entry pair = (Map.Entry) finalCapsIterator.next();
                     capabilities.setCapability((String) pair.getKey(),pair.getValue());
                     displayName = capabilities.getCapability("name")+" "+capabilities.getCapability("browser");
                 }
-                webDriverTestInvocationContexts.add(invocationContext(capabilities));
+                desiredCapsInvocationContexts.add(invocationContext(capabilities));
 
             }
         }catch (Exception e){
             System.out.println(e);
         }
-        return webDriverTestInvocationContexts.stream();
+        return desiredCapsInvocationContexts.stream();
     }
 
     private TestTemplateInvocationContext invocationContext(DesiredCapabilities caps) {
