@@ -34,16 +34,18 @@ public class SingleTest {
             driver.quit();
         } catch (Exception e) {
             sessionStatus.markTestStatus("failed", "There was some issue!",driver);
+            driver.quit();
             System.out.println("Exception: " + e.getMessage());
         }
     }
 
     //@WebDriverTest
-    void googleTest(DesiredCapabilities caps) {
-        BstackRunner runner = new BstackRunner();
-        driver = runner.setupWebDriver(caps);
-        driver.get("https://google.com/");
-        System.out.println("Test1: " + Thread.currentThread().getName());
-        driver.quit();
-    }
+//    void googleTest(DesiredCapabilities caps) {
+//        System.out.println("bstack:options - "+caps.getCapability("bstack:options"));
+//        BstackRunner runner = new BstackRunner();
+//        driver = runner.setupWebDriver(caps);
+//        driver.get("https://google.com/");
+//        System.out.println("Test1: " + Thread.currentThread().getName());
+//        driver.quit();
+//    }
 }

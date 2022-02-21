@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 public class BstackRunner implements TestTemplateInvocationContextProvider {
     JSONObject mainConfig, browserConfig, profileConfig, testConfig, platformConfig, commonCapsConfig;
-    HashMap<String, String> finalCapsMap,commonCapsMap;
+    HashMap<String, String> finalCapsMap,commonCapsMap,bstackOptions, bstackOptionsCommonCaps,bstackOptionsPlatform;
     WebDriver driver;
     DesiredCapabilities capabilities;
     String displayName, username, accesskey, server;
@@ -62,33 +62,47 @@ public class BstackRunner implements TestTemplateInvocationContextProvider {
     public Stream<TestTemplateInvocationContext> provideTestTemplateInvocationContexts(ExtensionContext extensionContext) {
         List<TestTemplateInvocationContext> webDriverTestInvocationContexts = new ArrayList<>();
         String profile = System.getProperty("config");
-
+        displayName = profile;
         try{
             testConfig = (JSONObject) mainConfig.get("tests");
-            profileConfig = (JSONObject) testConfig.get(profile);
+            profileConfig = (JSONObject) testConfig.get("parallel");
             platformConfig = (JSONObject) profileConfig.get("platform");
             commonCapsConfig = (JSONObject) profileConfig.get("common_caps");
             commonCapsMap = (HashMap<String, String>)commonCapsConfig;
-            Iterator platformIterator = platformConfig.keySet().iterator();
 
+            Iterator platformIterator = platformConfig.keySet().iterator();
             while (platformIterator.hasNext()){
-                Iterator commonCapsIterator = commonCapsMap.entrySet().iterator();
+
                 capabilities = new DesiredCapabilities();
+                Iterator commonCapsIterator = commonCapsMap.entrySet().iterator();
                 while (commonCapsIterator.hasNext()){
                     Map.Entry capsName = (Map.Entry) commonCapsIterator.next();
-                    capabilities.setCapability((String) capsName.getKey(),capsName.getValue());
+                    if(capsName.getKey().equals("bstack:options")){
+                        bstackOptionsCommonCaps = (HashMap<String, String>)commonCapsConfig.get("bstack:options");
+                    }else{
+                        capabilities.setCapability((String) capsName.getKey(),capsName.getValue());
+                    }
                 }
-                String platformName = (String) platformIterator.next();
-                browserConfig = (JSONObject) platformConfig.get(platformName);
+
+                String platformType = (String) platformIterator.next();
+                browserConfig = (JSONObject) platformConfig.get(platformType);
                 finalCapsMap = (HashMap<String, String>) browserConfig;
+
                 Iterator finalCapsIterator = finalCapsMap.entrySet().iterator();
                 while (finalCapsIterator.hasNext()){
-                    Map.Entry pair = (Map.Entry) finalCapsIterator.next();
-                    capabilities.setCapability((String) pair.getKey(),pair.getValue());
-                    displayName = capabilities.getCapability("name")+" "+capabilities.getCapability("browser");
+                    Map.Entry platformName = (Map.Entry) finalCapsIterator.next();
+                    if(platformName.getKey().equals("bstack:options")){
+                        bstackOptionsPlatform = (HashMap<String, String>) browserConfig.get("bstack:options");
+                    }else{
+                        capabilities.setCapability((String) platformName.getKey(),platformName.getValue());
+                    }
                 }
+                bstackOptions = new HashMap<>();
+                bstackOptions.putAll(bstackOptionsCommonCaps);
+                bstackOptions.putAll(bstackOptionsPlatform);
+                displayName = capabilities.getCapability("sessionName")+" "+capabilities.getCapability("browserName");
+                capabilities.setCapability("bstack:options",bstackOptions);
                 webDriverTestInvocationContexts.add(invocationContext(capabilities));
-
             }
         }catch (Exception e){
             System.out.println(e);

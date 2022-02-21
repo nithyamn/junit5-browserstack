@@ -28,6 +28,7 @@ public class LocalTest {
             driver.quit();
         }catch (Exception e){
             sessionStatus.markTestStatus("failed", "There was some issue!",driver);
+            driver.quit();
             System.out.println(e.getMessage());
         }
     }

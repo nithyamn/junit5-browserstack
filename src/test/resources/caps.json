@@ -5,80 +5,119 @@
   "tests": {
     "single": {
       "common_caps": {
-        "name": "single-test",
-        "build": "browserstack-junit5-sample",
-        "browserstack.console": "verbose",
-        "browserstack.networkLogs": "true"
+        "bstack:options": {
+          "buildName": "junit5-sample",
+          "sessionName":"single-test",
+          "seleniumVersion": "4.0.0",
+          "networkLogs": "true",
+          "consoleLogs": "verbose"
+        }
       },
       "platform": {
         "chrome": {
-          "browser": "chrome",
-          "browser_version": "latest",
-          "os": "Windows",
-          "os_version": "10"
+          "bstack:options": {
+            "os": "Windows",
+            "osVersion": "10"
+          },
+          "browserName": "chrome",
+          "browserVersion": "latest"
         }
       }
     },
     "local": {
       "common_caps": {
-        "name": "local-test",
-        "browserstack.local": "true",
-        "build": "browserstack-junit5-sample",
-        "browserstack.console": "verbose"
-      },
-      "platform":{
-        "chrome": {
-          "browser": "edge",
-          "browser_version": "latest",
-          "os": "Windows",
-          "os_version": "10"
+        "bstack:options": {
+          "buildName": "junit5-sample",
+          "sessionName":"local-test",
+          "seleniumVersion": "4.0.0",
+          "consoleLogs": "verbose",
+          "local": "true"
         }
-       }
       },
+      "platform": {
+        "chrome": {
+          "bstack:options": {
+            "os": "Windows",
+            "osVersion": "11"
+          },
+          "browserName": "edge",
+          "browserVersion": "latest"
+        }
+      }
+    },
     "parallel": {
         "common_caps": {
-          "name": "parallel-test",
-          "build": "browserstack-junit5-sample",
-          "browserstack.console": "verbose"
+          "bstack:options": {
+            "buildName": "junit5-sample",
+            "sessionName":"parallel-test",
+            "seleniumVersion": "4.0.0",
+            "consoleLogs": "verbose"
+          }
         },
         "platform":{
           "chrome": {
+            "bstack:options": {
+              "os": "Windows",
+              "osVersion": "10"
+            },
             "browser": "chrome",
-            "browser_version": "latest",
-            "os": "Windows",
-            "os_version": "10"
+            "browserVersion": "latest"
           },
           "safari": {
-            "browser": "safari",
-            "browser_version": "latest",
-            "os": "OS X",
-            "os_version": "Big Sur"
-          },
-          "android": {
-            "device": "Samsung Galaxy S21",
-            "os_version": "11.0"
-          },
-          "ios": {
-            "device": "iPhone 12 Mini",
-            "os_version": "14"
-          },
-          "tab": {
-            "device": "Samsung Galaxy Tab S7"
-          },
-          "ipad": {
-            "device": "iPad Mini 2019"
+            "bstack:options":{
+              "os": "OS X",
+              "osVersion": "Big Sur"
+            },
+            "browser":"safari",
+            "browserVersion": "latest"
           },
           "edge": {
+            "bstack:options": {
+              "os": "Windows",
+              "osVersion": "11"
+            },
             "browser": "edge",
-            "browser_version": "latest",
-            "os": "Windows",
-            "os_version": "11"
+            "browserVersion": "latest"
+          },
+          "firefox": {
+            "bstack:options": {
+              "os": "OS X",
+              "osVersion": "Monterey"
+            },
+            "browser": "firefox",
+            "browserVersion": "latest"
+          },
+          "android": {
+            "bstack:options":{
+              "deviceName": "Samsung Galaxy S21",
+              "osVersion": "11.0"
+            }
+          },
+          "ios": {
+            "bstack:options":{
+              "deviceName": "iPhone 12 Mini",
+              "osVersion": "14"
+            }
+          },
+          "tab": {
+            "bstack:options": {
+              "deviceName": "Samsung Galaxy Tab S7"
+            }
+          },
+          "ipad": {
+            "bstack:options": {
+              "deviceName": "iPad Mini 2019"
+            }
           },
           "xiaomi": {
-            "device": "Xiaomi Redmi Note 9"
+            "bstack:options": {
+              "deviceName": "Xiaomi Redmi Note 9"
+            }
           },
           "oneplus": {
-            "device": "OnePlus 9"
+            "bstack:options": {
+              "deviceName": "OnePlus 9"
+            }
           }
         }
       }
