@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 public class BstackRunner implements TestTemplateInvocationContextProvider {
     JSONObject mainConfig, browserConfig, profileConfig, testConfig, platformConfig, commonCapsConfig;
-    HashMap<String, String> finalCapsMap,commonCapsMap,bstackOptions, bstackOptionsCommonCaps,bstackOptionsPlatform;
+    HashMap<String, String> allCaps,commonCapsMap,bstackOptions, bstackOptionsCommonCaps,bstackOptionsPlatform;
     WebDriver driver;
     DesiredCapabilities capabilities;
     String displayName, username, accesskey, server;
@@ -86,9 +86,9 @@ public class BstackRunner implements TestTemplateInvocationContextProvider {
 
                 String platformType = (String) platformIterator.next();
                 browserConfig = (JSONObject) platformConfig.get(platformType);
-                finalCapsMap = (HashMap<String, String>) browserConfig;
+                allCaps = (HashMap<String, String>) browserConfig;
 
-                Iterator finalCapsIterator = finalCapsMap.entrySet().iterator();
+                Iterator finalCapsIterator = allCaps.entrySet().iterator();
                 while (finalCapsIterator.hasNext()){
                     Map.Entry platformName = (Map.Entry) finalCapsIterator.next();
                     if(platformName.getKey().equals("bstack:options")){
