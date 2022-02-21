@@ -6,7 +6,7 @@
     "single": {
       "common_caps": {
         "bstack:options": {
-          "buildName": "junit5-sample",
+          "buildName": "browserstack-junit5-sel4-sample",
           "sessionName":"single-test",
           "seleniumVersion": "4.0.0",
           "networkLogs": "true",
@@ -27,7 +27,7 @@
     "local": {
       "common_caps": {
         "bstack:options": {
-          "buildName": "junit5-sample",
+          "buildName": "browserstack-junit5-sel4-sample",
           "sessionName":"local-test",
           "seleniumVersion": "4.0.0",
           "consoleLogs": "verbose",
@@ -48,7 +48,7 @@
     "parallel": {
         "common_caps": {
           "bstack:options": {
-            "buildName": "junit5-sample",
+            "buildName": "browserstack-junit5-sel4-sample",
             "sessionName":"parallel-test",
             "seleniumVersion": "4.0.0",
             "consoleLogs": "verbose"

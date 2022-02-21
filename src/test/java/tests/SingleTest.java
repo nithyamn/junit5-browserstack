@@ -40,12 +40,12 @@ public class SingleTest {
     }
 
     //@WebDriverTest
-//    void googleTest(DesiredCapabilities caps) {
-//        System.out.println("bstack:options - "+caps.getCapability("bstack:options"));
-//        BstackRunner runner = new BstackRunner();
-//        driver = runner.setupWebDriver(caps);
-//        driver.get("https://google.com/");
-//        System.out.println("Test1: " + Thread.currentThread().getName());
-//        driver.quit();
-//    }
+    void googleTest(DesiredCapabilities caps) {
+        System.out.println("bstack:options - "+caps.getCapability("bstack:options"));
+        BstackRunner runner = new BstackRunner();
+        driver = runner.setupWebDriver(caps);
+        driver.get("https://google.com/");
+        System.out.println("Test1: " + Thread.currentThread().getName());
+        driver.quit();
+    }
 }
