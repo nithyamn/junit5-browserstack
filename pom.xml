@@ -11,6 +11,13 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <junit-jupiter-engine>5.8.1</junit-jupiter-engine>
+        <junit-vintage-engine>5.4.0</junit-vintage-engine>
+        <json-simple>1.1</json-simple>
+        <selenium-java>4.0.0-alpha-3</selenium-java>
+        <maven-surefire-plugin>3.0.0-M5</maven-surefire-plugin>
+        <browserstack-local-java>1.0.6</browserstack-local-java>
+
         <parallel.count>5</parallel.count>
         <tests.single>**/tests.SingleTest.java</tests.single>
         <tests.local>**/tests.LocalTest.java</tests.local>
@@ -21,35 +28,35 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.8.1</version>
+            <version>${junit-jupiter-engine}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
-            <version>5.4.0</version>
+            <version>${junit-vintage-engine}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
-            <version>1.1</version>
+            <version>${json-simple}</version>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.0.0-alpha-3</version>
+            <version>${selenium-java}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
-            <version>3.0.0-M5</version>
+            <version>${maven-surefire-plugin}</version>
             <type>maven-plugin</type>
         </dependency>
         <dependency>
             <groupId>com.browserstack</groupId>
             <artifactId>browserstack-local-java</artifactId>
-            <version>1.0.6</version>
+            <version>${browserstack-local-java}</version>
         </dependency>
     </dependencies>
 
@@ -112,7 +119,6 @@
                                 <config>parallel</config>
                             </systemPropertyVariables>
                             <properties>
-                                <threadCountMethods>5</threadCountMethods>
                                 <configurationParameters>
                                     junit.jupiter.execution.parallel.enabled = true
                                     junit.jupiter.execution.parallel.mode.default = concurrent

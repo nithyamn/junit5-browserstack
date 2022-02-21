@@ -32,4 +32,7 @@ Understand how many parallel sessions you need by using our [Parallel Test Calcu
 * [Using REST API to access information about your tests via the command-line interface](https://www.browserstack.com/automate/rest-api)
 
 ## Open Issues
-* Value for `junit.jupiter.execution.parallel.config.fixed.parallelism` gets multiplied in selenium versions above `4.0.0-alpha-3`. Github issue - https://github.com/SeleniumHQ/selenium/issues/9359
+* Value for `junit.jupiter.execution.parallel.config.fixed.parallelism` gets multiplied in selenium versions above `4.0.0-alpha-3`. 
+  Github issue:
+  * https://github.com/SeleniumHQ/selenium/issues/9359
+  * https://github.com/SeleniumHQ/selenium/issues/10113
