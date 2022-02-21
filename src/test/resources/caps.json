@@ -10,7 +10,8 @@
           "sessionName":"single-test",
           "seleniumVersion": "4.0.0",
           "networkLogs": "true",
-          "consoleLogs": "verbose"
+          "consoleLogs": "verbose",
+          "debug": "true"
         }
       },
       "platform": {
@@ -31,6 +32,7 @@
           "sessionName":"local-test",
           "seleniumVersion": "4.0.0",
           "consoleLogs": "verbose",
+          "debug": "true",
           "local": "true"
         }
       },
@@ -51,7 +53,8 @@
             "buildName": "junit5-browserstack",
             "sessionName":"parallel-test",
             "seleniumVersion": "4.0.0",
-            "consoleLogs": "verbose"
+            "consoleLogs": "verbose",
+            "debug": "true"
           }
         },
         "platform":{

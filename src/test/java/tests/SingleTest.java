@@ -31,12 +31,11 @@ public class SingleTest {
             }else{
                 sessionStatus.markTestStatus("failed", "There was some issue!", driver);
             }
-            driver.quit();
         } catch (Exception e) {
             sessionStatus.markTestStatus("failed", "There was some issue!",driver);
-            driver.quit();
             System.out.println("Exception: " + e.getMessage());
         }
+        driver.quit();
     }
 
     //@WebDriverTest

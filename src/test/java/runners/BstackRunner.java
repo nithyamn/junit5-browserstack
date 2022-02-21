@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 public class BstackRunner implements TestTemplateInvocationContextProvider {
     JSONObject mainConfig, browserConfig, profileConfig, testConfig, platformConfig, commonCapsConfig;
-    HashMap<String, String> allCaps,commonCapsMap,bstackOptions, bstackOptionsCommonCaps,bstackOptionsPlatform;
+    HashMap<String, String> allCapsMap,commonCapsMap,bstackOptions, bstackOptionsCommonCaps,bstackOptionsPlatform;
     WebDriver driver;
     DesiredCapabilities capabilities;
     String displayName, username, accesskey, server;
@@ -60,12 +60,12 @@ public class BstackRunner implements TestTemplateInvocationContextProvider {
 
     @Override
     public Stream<TestTemplateInvocationContext> provideTestTemplateInvocationContexts(ExtensionContext extensionContext) {
-        List<TestTemplateInvocationContext> webDriverTestInvocationContexts = new ArrayList<>();
+        List<TestTemplateInvocationContext> desiredCapsInvocationContexts = new ArrayList<>();
         String profile = System.getProperty("config");
         displayName = profile;
         try{
             testConfig = (JSONObject) mainConfig.get("tests");
-            profileConfig = (JSONObject) testConfig.get("parallel");
+            profileConfig = (JSONObject) testConfig.get(profile);
             platformConfig = (JSONObject) profileConfig.get("platform");
             commonCapsConfig = (JSONObject) profileConfig.get("common_caps");
             commonCapsMap = (HashMap<String, String>)commonCapsConfig;
@@ -86,9 +86,9 @@ public class BstackRunner implements TestTemplateInvocationContextProvider {
 
                 String platformType = (String) platformIterator.next();
                 browserConfig = (JSONObject) platformConfig.get(platformType);
-                allCaps = (HashMap<String, String>) browserConfig;
+                allCapsMap = (HashMap<String, String>) browserConfig;
 
-                Iterator finalCapsIterator = allCaps.entrySet().iterator();
+                Iterator finalCapsIterator = allCapsMap.entrySet().iterator();
                 while (finalCapsIterator.hasNext()){
                     Map.Entry platformName = (Map.Entry) finalCapsIterator.next();
                     if(platformName.getKey().equals("bstack:options")){
@@ -102,12 +102,12 @@ public class BstackRunner implements TestTemplateInvocationContextProvider {
                 bstackOptions.putAll(bstackOptionsPlatform);
                 displayName = capabilities.getCapability("sessionName")+" "+capabilities.getCapability("browserName");
                 capabilities.setCapability("bstack:options",bstackOptions);
-                webDriverTestInvocationContexts.add(invocationContext(capabilities));
+                desiredCapsInvocationContexts.add(invocationContext(capabilities));
             }
         }catch (Exception e){
             System.out.println(e);
         }
-        return webDriverTestInvocationContexts.stream();
+        return desiredCapsInvocationContexts.stream();
     }
 
     private TestTemplateInvocationContext invocationContext(DesiredCapabilities caps) {
