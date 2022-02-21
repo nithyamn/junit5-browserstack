@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 public class BstackRunner implements TestTemplateInvocationContextProvider {
     JSONObject mainConfig, browserConfig, profileConfig, testConfig, platformConfig, commonCapsConfig;
-    HashMap<String, String> finalCapsMap,commonCapsMap;
+    HashMap<String, String> allCaps,commonCapsMap;
     WebDriver driver;
     DesiredCapabilities capabilities;
     String displayName, username, accesskey, server;
@@ -80,8 +80,8 @@ public class BstackRunner implements TestTemplateInvocationContextProvider {
                 }
                 String platformName = (String) platformIterator.next();
                 browserConfig = (JSONObject) platformConfig.get(platformName);
-                finalCapsMap = (HashMap<String, String>) browserConfig;
-                Iterator finalCapsIterator = finalCapsMap.entrySet().iterator();
+                allCaps = (HashMap<String, String>) browserConfig;
+                Iterator finalCapsIterator = allCaps.entrySet().iterator();
                 while (finalCapsIterator.hasNext()){
                     Map.Entry pair = (Map.Entry) finalCapsIterator.next();
                     capabilities.setCapability((String) pair.getKey(),pair.getValue());
