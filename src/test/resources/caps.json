@@ -98,6 +98,26 @@
               "deviceName": "iPhone 12 Mini",
               "osVersion": "14"
             }
+          },
+          "tab": {
+            "bstack:options": {
+              "deviceName": "Samsung Galaxy Tab S7"
+            }
+          },
+          "ipad": {
+            "bstack:options": {
+              "deviceName": "iPad Mini 2019"
+            }
+          },
+          "xiaomi": {
+            "bstack:options": {
+              "deviceName": "Xiaomi Redmi Note 9"
+            }
+          },
+          "oneplus": {
+            "bstack:options": {
+              "deviceName": "OnePlus 9"
+            }
           }
         }
       }
