@@ -25,7 +25,7 @@ Understand how many parallel sessions you need by using our [Parallel Test Calcu
   export BROWSERSTACK_ACCESS_KEY=<browserstack-access-key>
   ```
 
-## Addtional Resources
+## Additional Resources
 * [Documentation for writing Automate test scripts in Java](https://www.browserstack.com/automate/java)
 * [Customizing your tests on BrowserStack](https://www.browserstack.com/automate/capabilities)
 * [Browsers & mobile devices for selenium testing on BrowserStack](https://www.browserstack.com/list-of-browsers-and-platforms?product=automate)
