@@ -11,7 +11,7 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-        <parallel.count>2</parallel.count>
+        <parallel.count>3</parallel.count>
         <tests.single>**/tests.SingleTest.java</tests.single>
         <tests.local>**/tests.LocalTest.java</tests.local>
 
@@ -38,7 +38,7 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.1.2</version>
+            <version>4.0.0-alpha-3</version>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
@@ -50,12 +50,6 @@
             <groupId>com.browserstack</groupId>
             <artifactId>browserstack-local-java</artifactId>
             <version>1.0.6</version>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-devtools-v93</artifactId>
-            <version>4.0.0</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -118,6 +112,7 @@
                                 <config>parallel</config>
                             </systemPropertyVariables>
                             <properties>
+                                <threadCountMethods>5</threadCountMethods>
                                 <configurationParameters>
                                     junit.jupiter.execution.parallel.enabled = true
                                     junit.jupiter.execution.parallel.mode.default = concurrent
