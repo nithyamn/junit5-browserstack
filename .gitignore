@@ -2,7 +2,7 @@ target
 build
 reports
 .gradle
-.idea
+../.idea
 *.iml
 /test-output/*
 /target/*
@@ -17,3 +17,4 @@ reports
 .DS_Store
 .project
 .allure/
+browserstack.err
