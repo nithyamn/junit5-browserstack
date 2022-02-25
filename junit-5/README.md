@@ -8,7 +8,7 @@ Master branch contains **Selenium 3** samples, for **Selenium 4 - W3C protocol**
 * Clone the repo
 * Install dependencies `mvn install`
 * Update credentials in the `/src/test/resources/caps.json` file with your [BrowserStack Username and Access Key](https://www.browserstack.com/accounts/settings).
-* The platform details can be modified in the `/src/test/resources/caps.json` file within the respective profile i.e. `single`, `local`, `parallel`. Refer to our [Capabilities Generator](https://www.browserstack.com/automate/capabilities) page for all platform and capabilities-related information.
+* The platform details can be modified in the `/src/test/resources/caps.json` file within the respective profile i.e. `single`, `local`, `parallel`. Refer to our [Capabilities Generator](https://www.browserstack.com/automate/capabilities) page for all platform and capabilities related information.
 * For parallel testing, control the concurrency by setting the value for `parallel. count`. Junit 5 uses the following properties for parallelism:
   ```
   junit.jupiter.execution.parallel.enabled = true
