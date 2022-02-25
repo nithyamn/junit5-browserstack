@@ -80,7 +80,7 @@ public class BstackRunner implements TestTemplateInvocationContextProvider {
                     Map.Entry pair = (Map.Entry) finalCapsIterator.next();
                     capabilities.setCapability((String) pair.getKey(),pair.getValue());
                 }
-                //Local testing setup
+                //Initializing local testing connection
                 if(capabilities.getCapability("browserstack.local") != null && capabilities.getCapability("browserstack.local").toString().equals("true")){
                     HashMap<String,String> localOptions = new HashMap<>();
                     localOptions.put("key", accesskey);
