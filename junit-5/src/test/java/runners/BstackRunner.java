@@ -55,6 +55,8 @@ public class BstackRunner implements TestTemplateInvocationContextProvider {
     @Override
     public Stream<TestTemplateInvocationContext> provideTestTemplateInvocationContexts(ExtensionContext extensionContext) {
         List<TestTemplateInvocationContext> desiredCapsInvocationContexts = new ArrayList<>();
+
+        //picks the test profile based on the maven command executed - single, local, parallel
         String profile = System.getProperty("config");
 
         try{
@@ -91,9 +93,11 @@ public class BstackRunner implements TestTemplateInvocationContextProvider {
                         capabilities.setCapability((String) platformName.getKey(),platformName.getValue());
                     }
                 }
+                //Initializing local testing connection
                 if(bstackOptionsCommonCaps.containsKey("local")){
                     HashMap<String,String> localOptions = new HashMap<>();
                     localOptions.put("key", accesskey);
+                    //Add more local options here, e.g. forceLocal, localIdentifier, etc.
                     SetupLocalTesting.createInstance(localOptions);
                 }
                 bstackOptions = new HashMap<>();
