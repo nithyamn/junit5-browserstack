@@ -47,7 +47,7 @@
         "platform":{
           "chrome": {
             "browser": "chrome",
-            "browser_version": "latest",
+            "browser_version": "latest-1",
             "os": "Windows",
             "os_version": "10"
           },
@@ -56,6 +56,18 @@
             "browser_version": "latest",
             "os": "OS X",
             "os_version": "Big Sur"
+          },
+          "firefox": {
+            "browser": "firefox",
+            "browser_version": "latest-2",
+            "os": "OS X",
+            "os_version": "Monterey"
+          },
+          "edge": {
+            "browser": "edge",
+            "browser_version": "latest",
+            "os": "Windows",
+            "os_version": "11"
           },
           "android": {
             "device": "Samsung Galaxy S21",
@@ -70,12 +82,6 @@
           },
           "ipad": {
             "device": "iPad Mini 2019"
-          },
-          "edge": {
-            "browser": "edge",
-            "browser_version": "latest",
-            "os": "Windows",
-            "os_version": "11"
           },
           "xiaomi": {
             "device": "Xiaomi Redmi Note 9"
