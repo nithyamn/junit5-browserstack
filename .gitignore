@@ -18,3 +18,4 @@ reports
 .project
 .allure/
 browserstack.err
+junit5-browserstack.iml
