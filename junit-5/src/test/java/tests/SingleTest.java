@@ -10,12 +10,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import runners.WebDriverTest;
 
 public class SingleTest {
-    WebDriver driver;
 
     @WebDriverTest
-    void singleTest(DesiredCapabilities capabilities) {
-        BstackRunner runner = new BstackRunner();
-        driver = runner.setupWebDriver(capabilities);
+    void singleTest(WebDriver driver) {
+
         MarkSessionStatus sessionStatus = new MarkSessionStatus();
         try {
             driver.get("https://bstackdemo.com/");
@@ -39,9 +37,7 @@ public class SingleTest {
     }
 
     //@WebDriverTest
-    void googleTest(DesiredCapabilities caps) {
-        BstackRunner runner = new BstackRunner();
-        driver = runner.setupWebDriver(caps);
+    void googleTest(WebDriver driver) {
         driver.get("https://google.com/");
         System.out.println("Test 1: " + Thread.currentThread().getName());
         driver.quit();
