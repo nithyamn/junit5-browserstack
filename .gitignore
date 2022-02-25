@@ -1,4 +1,4 @@
-junit-5/target
+target
 build
 reports
 .gradle
@@ -18,3 +18,5 @@ reports
 .project
 .allure/
 browserstack.err
+*.iml
+local.log
