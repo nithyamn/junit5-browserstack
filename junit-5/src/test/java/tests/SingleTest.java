@@ -1,6 +1,5 @@
 package tests;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import runners.BstackRunner;
+
 import utils.MarkSessionStatus;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,14 +9,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import runners.WebDriverTest;
 
 public class SingleTest {
-    WebDriver driver;
 
     @WebDriverTest
-    void singleTest(DesiredCapabilities capabilities) {
-        BstackRunner runner = new BstackRunner();
-        driver = runner.setupWebDriver(capabilities);
+    void singleTest(WebDriver driver) {
         MarkSessionStatus sessionStatus = new MarkSessionStatus();
         try {
+
             driver.get("https://bstackdemo.com/");
             final WebDriverWait wait = new WebDriverWait(driver, 10);
             wait.until(ExpectedConditions.titleIs("StackDemo"));
@@ -39,11 +36,8 @@ public class SingleTest {
     }
 
     //@WebDriverTest
-    void googleTest(DesiredCapabilities caps) {
-        System.out.println("bstack:options - "+caps.getCapability("bstack:options"));
-        BstackRunner runner = new BstackRunner();
-        driver = runner.setupWebDriver(caps);
-        driver.get("https://google.com/");
+    void googleTest(WebDriver driver) {
+        driver.get("https://www.google.com/");
         System.out.println("Test1: " + Thread.currentThread().getName());
         driver.quit();
     }

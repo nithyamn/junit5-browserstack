@@ -1,24 +1,18 @@
 package tests;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import runners.BstackRunner;
-import utils.MarkSessionStatus;
-import utils.SetupLocalTesting;
 
-import org.json.simple.parser.ParseException;
-import org.junit.jupiter.api.extension.ExtendWith;
+import utils.MarkSessionStatus;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import runners.WebDriverTest;
 
 
-@ExtendWith({SetupLocalTesting.class})
-public class LocalTest {
-    WebDriver driver;
+public class LocalTest{
+
     @WebDriverTest
-    void localTest(DesiredCapabilities capabilities) throws ParseException {
+    void localTest(WebDriver driver) {
         MarkSessionStatus sessionStatus = new MarkSessionStatus();
-        BstackRunner runner = new BstackRunner();
-        driver = runner.setupWebDriver(capabilities);
+
         try{
             driver.get("http://localhost:45691/check");
             String validateContent = driver.findElement(By.cssSelector("body")).getText();

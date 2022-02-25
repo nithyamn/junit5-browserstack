@@ -1,6 +1,8 @@
 package utils;
 
 import com.browserstack.local.Local;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -9,71 +11,53 @@ import runners.BstackRunner;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
-public class SetupLocalTesting implements BeforeAllCallback, AfterAllCallback {
-    Local local;
+public class SetupLocalTesting{
+    private static volatile SetupLocalTesting instance;
 
-    @Override
-    public void beforeAll(ExtensionContext extensionContext) throws Exception {
-        BstackRunner runner = new BstackRunner();
-        String accesskey = runner.setupCredentials()[1];
+    private final Local local = new Local();
 
-        try{
-            local = new Local();
-            System.out.println("Is local binary already running in the system : "+isLocalRunning());
-            if(!isLocalRunning())
-            {
-                HashMap<String, String> bsLocalArgs = new HashMap<String, String>();
-                bsLocalArgs.put("key", accesskey);
-                local.start(bsLocalArgs);
-
-                System.out.println("Has local binary started :"+local.isRunning());
-            }else
-            {
-                System.out.println("Local binary is already running!");
-            }
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-    }
-
-    @Override
-    public void afterAll(ExtensionContext extensionContext) throws Exception {
+    private SetupLocalTesting(Map<String, String> localOptions) {
         try {
-            local.stop();
-            System.out.println("Is local binary running : "+local.isRunning());
+            local.start(localOptions);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException("Initialization of BrowserStack Local failed.", e);
         }
     }
 
-
-    private boolean isLocalRunning(){
-        boolean flag = false;
-        ProcessBuilder processBuilder;
-        Process p;
-        BufferedReader input;
-        String output, cmd;
-        if(OSUtils.isMac() || OSUtils.isUnix()){
-            try {
-                cmd = "ps -ax | grep 'BrowserStack'";
-                processBuilder  = new ProcessBuilder("bash", "-c", cmd);
-                p = processBuilder.start();
-                input = new BufferedReader(new InputStreamReader(p.getInputStream()));
-
-                while ((output = input.readLine()) != null) {
-                    if(!output.contains("--key"))
-                        flag = false;
-                    else
-                        flag = true;
+    public static void createInstance(Map<String, String> args) {
+        if (instance == null) {
+            synchronized (SetupLocalTesting.class) {
+                if (instance == null) {
+                    instance = new SetupLocalTesting(args);
+                    Runtime.getRuntime().addShutdownHook(new Closer(instance.local));
                 }
-                input.close();
-            }catch (Exception e){
-                System.out.println(e.getMessage());
             }
-        }else{
-            //Command for windows
         }
-        return flag;
+    }
+
+    public static SetupLocalTesting getInstance() {
+        return instance;
+    }
+
+    private static class Closer extends Thread {
+        private final Local local;
+
+        public Closer(Local local) {
+            this.local = local;
+        }
+
+        @Override
+        public void run() {
+            try {
+                if (local.isRunning()) {
+                    local.stop();
+                }
+            } catch (Exception e) {
+                System.out.println("Error encountered while stopping BrowserStack Local { }"+e);
+            }
+        }
     }
 }

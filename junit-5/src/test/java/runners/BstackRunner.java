@@ -6,8 +6,10 @@ import org.junit.jupiter.api.extension.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import utils.SetupLocalTesting;
 
 import java.io.FileReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Stream;
@@ -17,13 +19,13 @@ public class BstackRunner implements TestTemplateInvocationContextProvider {
     HashMap<String, String> allCapsMap,commonCapsMap,bstackOptions, bstackOptionsCommonCaps,bstackOptionsPlatform;
     WebDriver driver;
     DesiredCapabilities capabilities;
-    String displayName, username, accesskey, server;
+    String username, accesskey, server;
+
 
     public String[] setupCredentials(){
-        String server = null, username = null, accesskey = null;
         try{
             JSONParser parse = new JSONParser();
-            mainConfig = (JSONObject) parse.parse(new FileReader("src/test/resources/caps.json"));
+            mainConfig = (JSONObject) parse.parse(new FileReader(System.getProperty("user.dir")+"/src/test/resources/caps.json"));
             server = (String) mainConfig.get("server");
             username = System.getenv("BROWSERSTACK_USERNAME");
             if(username == null){
@@ -45,14 +47,6 @@ public class BstackRunner implements TestTemplateInvocationContextProvider {
        this.server = setupCredentials()[2];
     }
 
-    public WebDriver setupWebDriver(DesiredCapabilities capabilities){
-        try{
-            driver = new RemoteWebDriver(new URL("https://" + username + ":" + accesskey + "@"+server+"/wd/hub"),capabilities);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        return driver;
-    }
     @Override
     public boolean supportsTestTemplate(ExtensionContext extensionContext) {
         return true;
@@ -62,7 +56,7 @@ public class BstackRunner implements TestTemplateInvocationContextProvider {
     public Stream<TestTemplateInvocationContext> provideTestTemplateInvocationContexts(ExtensionContext extensionContext) {
         List<TestTemplateInvocationContext> desiredCapsInvocationContexts = new ArrayList<>();
         String profile = System.getProperty("config");
-        displayName = profile;
+
         try{
             testConfig = (JSONObject) mainConfig.get("tests");
             profileConfig = (JSONObject) testConfig.get(profile);
@@ -97,11 +91,16 @@ public class BstackRunner implements TestTemplateInvocationContextProvider {
                         capabilities.setCapability((String) platformName.getKey(),platformName.getValue());
                     }
                 }
+                if(bstackOptionsCommonCaps.containsKey("local")){
+                    HashMap<String,String> localOptions = new HashMap<>();
+                    localOptions.put("key", accesskey);
+                    SetupLocalTesting.createInstance(localOptions);
+                }
                 bstackOptions = new HashMap<>();
                 bstackOptions.putAll(bstackOptionsCommonCaps);
                 bstackOptions.putAll(bstackOptionsPlatform);
-                displayName = capabilities.getCapability("sessionName")+" "+capabilities.getCapability("browserName");
                 capabilities.setCapability("bstack:options",bstackOptions);
+
                 desiredCapsInvocationContexts.add(invocationContext(capabilities));
             }
         }catch (Exception e){
@@ -112,10 +111,6 @@ public class BstackRunner implements TestTemplateInvocationContextProvider {
 
     private TestTemplateInvocationContext invocationContext(DesiredCapabilities caps) {
         return new TestTemplateInvocationContext() {
-            @Override
-            public String getDisplayName(int invocationIndex) {
-                return displayName;
-            }
 
             @Override
             public List<Extension> getAdditionalExtensions() {
@@ -124,13 +119,18 @@ public class BstackRunner implements TestTemplateInvocationContextProvider {
                     @Override
                     public boolean supportsParameter(ParameterContext parameterContext,
                                                      ExtensionContext extensionContext) {
-                        return parameterContext.getParameter().getType().equals(DesiredCapabilities.class);
+                        return parameterContext.getParameter().getType().equals(WebDriver.class);
                     }
 
                     @Override
                     public Object resolveParameter(ParameterContext parameterContext,
                                                    ExtensionContext extensionContext) {
-                        return caps;
+                        try {
+                            driver = new RemoteWebDriver(new URL("https://" + username + ":" + accesskey + "@"+server+"/wd/hub"),caps);
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        }
+                        return driver;
                     }
                 });
             }
